@@ -36,6 +36,10 @@
       const userid = $('#userid').val();
       const key = $('#key').val();
       const value = $('#value').val();
+      if (!userid || !key || !value) {
+        alert("You must fill ALL fields");
+        return;
+      }
       $.post("/process/create", {
         userid: userid,
         key: key,
