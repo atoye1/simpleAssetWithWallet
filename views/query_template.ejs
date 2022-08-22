@@ -66,9 +66,12 @@
         if (data.result == 'success') {
           alert('성공');
           result.empty();
+          console.log(data);
           for (var i = 0; i < data.message.length; i++) {
-            $('#history-result').append('<tr><td>key</td><td>' + data.message[i].key + '</td></tr>');
-            $('#history-result').append('<tr><td>value</td><td>' + data.message[i].value + '</td></tr>');
+            $('#history-result').append('<tr><td>TxId</td><td>' + data.message[i].TxId + '</td></tr>');
+            $('#history-result').append('<tr><td>record</td><td>' + JSON.stringify(data.message[i].record) + '</td></tr>');
+            $('#history-result').append('<tr><td>timestamp</td><td>' + data.message[i].timestamp + '</td></tr>');
+            $('#history-result').append('<tr><td>isDelete</td><td>' + data.message[i].isDelete + '</td></tr>');
             $('#history-result').append('<tr style="border-bottom: 1px solid black"></tr>');
           }
         } else {
