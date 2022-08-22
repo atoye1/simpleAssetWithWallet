@@ -36,7 +36,7 @@
     $("#queryBtn").click(() => {
       const key = $('#key').val();
       if (!key) {
-        alert("You must specify key");
+        alert("You must input key");
         return;
       }
       $.get("/process/query", {
@@ -57,7 +57,7 @@
     $("#queryHistoryBtn").click(() => {
       const key = $('#key').val();
       if (!key) {
-        alert("You must specify key");
+        alert("You must input key");
         return;
       }
       $.get("/process/history", {
@@ -67,6 +67,7 @@
           alert('성공');
           result.empty();
           console.log(data);
+          $('#history-result').append('<tr style="border-bottom: 1px solid black"></tr>');
           for (var i = 0; i < data.message.length; i++) {
             $('#history-result').append('<tr><td>TxId</td><td>' + data.message[i].TxId + '</td></tr>');
             $('#history-result').append('<tr><td>record</td><td>' + JSON.stringify(data.message[i].record) + '</td></tr>');
