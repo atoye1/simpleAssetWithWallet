@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include("./head.ejs") %>
+  <title>Create Asset</title>
+</head>
+
+<body>
+  <div class="container d-flex" style="height: 70vh">
+    <div class="container d-flex flex-column p-5 justify-content-center align-items-center">
+      <h2 class="my-5">SimpleAsset Query History Forms</h2>
+
+      <form action="/process/history" method="get">
+        <label class="form-label" for="fname">Key</label><br>
+        <input class="form-control" type="text" id="key" name="key" value=""><br>
+        <div class="d-flex flex-row justify-content-between">
+          <input type="submit" class="btn btn-warning" value="Query">
+          <a href="/" id="homeBtn" class="btn btn-primary mx-3" type="submit">Back To Home</a>
+        </div>
+        <div class="d-grid">
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

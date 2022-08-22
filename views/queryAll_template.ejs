@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include("./head.ejs") %>
+  <title>Query All Asset</title>
+</head>
+
+
+<body>
+  <div class="container d-flex" style="height: 70vh">
+    <div class="container d-flex flex-column p-5 justify-content-center align-items-center">
+      <h2 class="my-5">Query All Assets</h2>
+
+      <h3 class="form-label" for="fname">Click Button to Check All Assets</h3><br>
+      <!-- <input class="form-control" type="text" id="fname" name="key" value=""> -->
+      <br>
+
+      <div class="d-flex flex-row justify-content-between">
+        <button id="queryAllBtn" type="submit" class="btn btn-warning" value="Query All Assets">Query All Assets</button>
+        <a href="/" id="homeBtn" class="btn btn-primary mx-3" type="submit">Back To Home</a>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <p id="result"></p>
+    <table class="table table-hover">
+      <tbody id="query-all-result"> </tbody>
+    </table>
+  </div>
+  <script>
+    const result = $('#result');
+    $("#queryAllBtn").click(() => {
+      $.get("/process/queryAll", (data, status) => {
+        if (data.result == 'success') {
+          alert("성공")
+          $('#query-all-result').append('<tr style="border-bottom: 1px solid black"></tr>');
+          for (var i = 0; i < data.message.length; i++) {
+            result.empty();
+            $('#query-all-result').append('<tr><td>Index</td><td>' + i + '</td></tr>');
+            $('#query-all-result').append('<tr><td>Asset Key</td><td>' + data.message[i].key + '</td></tr>');
+            $('#query-all-result').append('<tr><td>Asset Value</td><td>' + data.message[i].value + '</td></tr>');
+            $('#query-all-result').append('<tr style="border-bottom: 1px solid black"></tr>');
+          }
+        } else {
+          result.empty();
+          alert('실패')
+        }
+      });
+    })
+  </script>
+</body>
+
+</html>

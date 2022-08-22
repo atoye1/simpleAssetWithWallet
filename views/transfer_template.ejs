@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include("./head.ejs") %>
+  <title>Transfer Asset</title>
+</head>
+
+
+<body>
+
+  <div class="container d-flex" style="height: 70vh">
+    <div class="container d-flex flex-column p-5 justify-content-center align-items-center text-center">
+      <h2 class="my-5">SimpleAsset Transfer Forms</h2>
+      <label class="form-label" for="fname">User ID</label>
+      <input class="form-control" type="text" id="userid" name="userid" value="">
+      <label class="form-label" for="fname">From</label>
+      <input class="form-control" type="text" id="from" name="from" value="">
+      <label class="form-label" for="lname">To</label>
+      <input class="form-control" type="text" id="to" name="to" value="">
+      <label class="form-label" for="lname">Amount</label>
+      <input class="form-control" type="text" id="amount" name="amount" value=""><br><br>
+
+      <div class="d-flex flex-row justify-content-between">
+        <button id="btn" class="btn btn-danger" type="submit" value="Transfer Asset">Transfer Asset</button>
+        <a href="/" id="homeBtn" class="btn btn-primary mx-3" type="submit">Back To Home</a>
+      </div>
+      <div id="result">
+
+      </div>
+    </div>
+  </div>
+  <script>
+    const result = $('#result');
+    $("#btn").click(() => {
+      const userid = $('#userid').val();
+      const from = $('#from').val();
+      const to = $('#to').val();
+      const amount = $('#amount').val();
+      if (!userid || !from || !to || !amount) {
+        alert("You must fill every fields");
+        return;
+      }
+      $.post("/process/transfer", {
+        userid: userid,
+        from: from,
+        to: to,
+        amount: amount
+      }, (data, status) => {
+        console.log(data);
+        if (data.result == 'success') {
+          alert("성공")
+        } else {
+          alert('실패')
+        }
+        result.empty();
+        result.append(JSON.stringify(data));
+      });
+    })
+  </script>
+</body>
+
+</html>

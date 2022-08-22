@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include("./head.ejs") %>
+  <title>Admin Wallet Add</title>
+</head>
+
+<body>
+
+  <div class="container d-flex-row" style="height: 70vh">
+    <div class="container d-flex flex-column p-5 justify-content-center align-items-center text-center">
+      <h2 class="my-5">Admin CA Issue Page</h2>
+      <h5>Input ID and Password for Admin CA</h5>
+      <br>
+      <label class="form-label" for="fname">ID</label>
+      <input class="form-control" type="text" id="adminid" name="id" value=""><br>
+      <label class="form-label" for="lname">Password</label>
+      <input class="form-control" type="password" id="adminpw" name="password" value=""><br><br>
+      <div class="d-flex justify-content-between m-auto">
+        <button id="gen-btn" class="btn btn-danger mx-3">Create Admin CA</button>
+        <a href="/" id="homeBtn" class="btn btn-primary mx-3" type="submit">Back To Home</a>
+      </div>
+    </div>
+    <div class="container" id="result"></div>
+  </div>
+</body>
+<script>
+  $("#gen-btn").click(() => {
+    const id = $("#adminid").val();
+    const password = $("#adminpw").val();
+
+    console.log(id, password);
+
+    $.post("/process/admin", {
+      "id": id,
+      "password": password
+    }, (data, status) => {
+      if (data.result === 'success') {
+        alert("Success");
+      } else {
+        alert("Fail");
+      }
+
+      $("#result").empty();
+      $("#result").append("<p>" + JSON.stringify(data) + "</p>");
+    });
+  })
+</script>
+
+</html>

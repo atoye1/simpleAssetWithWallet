@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include("./head.ejs") %>
+  <title>Create Asset</title>
+</head>
+
+
+<body>
+
+  <div class="container d-flex" style="height: 70vh">
+    <div class="container d-flex flex-column p-5 justify-content-center align-items-center text-center">
+      <h2 class="my-5">SimpleAsset Create Forms</h2>
+      <label class="form-label" for="fname">userid</label><br>
+      <input class="form-control" type="text" id="userid" name="userid" value=""><br>
+      <label class="form-label" for="fname">Key</label><br>
+      <input class="form-control" type="text" id="key" name="key" value=""><br>
+      <label class="form-label" for="lname">Value</label><br>
+      <input class="form-control" type="text" id="value" name="value" value=""><br><br>
+      <div class="d-flex flex-row justify-content-between">
+        <button id="postBtn" class="btn btn-danger mx-3" type="submit">Create Asset</button>
+        <a href="/" id="homeBtn" class="btn btn-primary mx-3" type="submit">Back To Home</a>
+      </div>
+      <div class=id="result">
+
+      </div>
+    </div>
+    <div id="result" class="d-none">
+
+    </div>
+  </div>
+  <script>
+    const result = $('#result');
+    $("#postBtn").click(() => {
+      const userid = $('#userid').val();
+      const key = $('#key').val();
+      const value = $('#value').val();
+      $.post("/process/create", {
+        userid: userid,
+        key: key,
+        value: value,
+      }, (data, status) => {
+        console.log(data);
+        if (data.result == 'success') {
+          alert("성공")
+        } else {
+          alert('실패')
+        }
+        result.empty();
+        result.append(JSON.stringify(data));
+      });
+    })
+  </script>
+</body>
+
+</html>

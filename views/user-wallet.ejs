@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include("./head.ejs") %>
+  <title>USER Wallet Add</title>
+</head>
+
+<body>
+  <div class="container d-flex-row" style="height: 70vh">
+    <div class="container d-flex flex-column p-5 justify-content-center align-items-center text-center">
+      <h2 class="my-5">USER CA Issue Page</h2>
+      <h5>Input ID and ROLE for USER CA</h5>
+      <br>
+      <label class="form-label" for="fname">ID</label>
+      <input class="form-control" type="text" id="userid" name="id" value=""><br>
+      <label class="form-label" for="lname">ROLE</label>
+      <input class="form-control" type="text" id="userrole" name="password" value=""><br><br>
+      <div class="d-flex justify-content-between m-auto">
+        <button id="gen-btn" class="btn btn-danger mx-1">Create USER CA</button>
+        <button id="query-btn" class="btn btn-success mx-1">Query USER</button>
+        <a href="/" id="homeBtn" class="btn btn-primary mx-1" type="submit">Back To Home</a>
+      </div>
+    </div>
+    <div class="container" id="result">
+      <table class="d-none" id="ttable">
+        <thead>
+          <tr>
+            <th id="table-key" scope="col">key</th>
+            <th id="table-value" scope="col">content</th>
+          </tr>
+        </thead>
+        <tbody id="ttablebody"></tbody>
+      </table>
+    </div>
+  </div>
+</body>
+<script>
+  $("#gen-btn").click(() => {
+    const id = $("#userid").val();
+    const userrole = $("#userrole").val();
+
+    console.log(id, userrole);
+    // userole must be client
+    $.post("/process/user", {
+      "id": id,
+      "userrole": userrole
+    }, (data, status) => {
+      console.log(status);
+      $("#ttablebody").empty();
+      $("#ttablebody").append("<tr><td>result</td><td>" + data.result + "</td></tr>");
+      $("#ttablebody").append("<tr><td>message</td><td>" + data.result + "</td></tr>");
+      $("#ttable").attr("class", "table");
+    });
+  });
+
+  $("#query-btn").click(() => {
+    $.get('/process/userlist', (data) => {
+      $('#ttablebody').empty();
+      if (data.result === 'success') {
+        alert("user list get success");
+        console.log(data.ids);
+        let idx = 1;
+        data.ids.forEach(elem => {
+          console.log(elem);
+          $('#ttablebody').append("<tr><td>" + idx++ + "</td><td>" + elem + "</td></tr>");
+        });
+        $('#ttable').attr('class', 'table');
+      } else {
+        alert("Failed to get user list");
+      }
+    });
+  })
+</script>
+
+</html>
